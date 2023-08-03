@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-
 import { IoMdClose } from "react-icons/io";
+
 import Button from "../Button";
 
 interface ModalProps {
@@ -100,16 +100,16 @@ const Modal: React.FC<ModalProps> = ({
           <div
             className={`
                     translate
-                    dusration-300
+                    duration-300
                     h-full
-                    ${showModal ? "translate-y-0" : "translate-y-full"}
+                    ${showModal ? "md:translate-y-16 translate-y-0" : "translate-y-full"}
                     ${showModal ? "opacity-300" : "opacity-0"}
                 `}
           >
             <div
               className="
                 translate
-                h-full
+                h-auto
                 lg:h-auto
                 md:h-full
                 border-0
@@ -193,6 +193,7 @@ const Modal: React.FC<ModalProps> = ({
                     onClick={handleSubmit}
                   />
                 </div>
+                {footer}
               </div>
             </div>
           </div>
