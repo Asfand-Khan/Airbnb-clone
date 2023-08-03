@@ -38,7 +38,7 @@ const Input: React.FC<InputProps> = ({
         />
       )}
       <input
-      autoComplete="off"
+        autoComplete="off"
         type={type}
         disabled={disabled}
         {...register(id, { required })}

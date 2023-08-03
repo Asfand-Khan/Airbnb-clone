@@ -41,9 +41,11 @@ const Modal: React.FC<ModalProps> = ({
       return;
     }
 
+    // This will only change the value of showModal state not isOpen state of Modal
     setShowModal(false);
 
     setTimeout(() => {
+      // This will change the state of isOpen through onClose function using useRegisterModal
       onClose();
     }, 300);
   }, [disabled, onClose]);
@@ -57,6 +59,8 @@ const Modal: React.FC<ModalProps> = ({
   }, [disabled, onSubmit]);
 
   const handleSecondaryAction = useCallback(() => {
+
+    // This will check check if the disabled is true or is secondaryAction is there -- if not it will do nothing
     if (disabled || !secondaryAction) {
       return;
     }
