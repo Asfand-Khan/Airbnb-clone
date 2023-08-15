@@ -5,9 +5,11 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 import { useRegisterModal } from "@/app/hooks/useRegisterModal";
+import { useLoginModal } from "@/app/hooks/useLoginModal";
+
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
@@ -16,6 +18,7 @@ import { signIn } from "next-auth/react";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
+  const LoginModal = useLoginModal();
   const [isLoading, setIsLaoding] = useState(false);
 
   const {
@@ -34,17 +37,22 @@ const RegisterModal = () => {
     setIsLaoding(true);
 
     axios.post('/api/register', data)
-    .then(() => {
-      toast.success('Registered!');
-      registerModal.onClose();
-    })
-    .catch((error) => {
-      toast.error(error);
-    })
-    .finally(() => {
-      setIsLaoding(false);
-    })
+      .then(() => {
+        toast.success('Registered!');
+        registerModal.onClose();
+      })
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLaoding(false);
+      })
   };
+
+  const toggle = useCallback(() => {
+    registerModal.onClose();
+    LoginModal.onOpen();
+  }, [LoginModal, registerModal])
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -79,18 +87,18 @@ const RegisterModal = () => {
 
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
-      <hr/>
+      <hr />
       <Button
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={()=>signIn("google")}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={()=>signIn("github")}
+        onClick={() => signIn("github")}
       />
       <div className="
         text-neutral-500
@@ -103,8 +111,8 @@ const RegisterModal = () => {
             Already have an account?
           </div>
           <div
-          onClick={registerModal.onClose} 
-          className="
+            onClick={toggle}
+            className="
             hover:underline
             text-neutral-800
             cursor-pointer
